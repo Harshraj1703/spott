@@ -1,7 +1,9 @@
 import { ThemeProvider } from "@/components/theme.provider";
 import "./globals.css";
 import Header from "@/components/header";
-
+import { ConvexClientProvider } from "./ConvexClientProvider";
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from '@clerk/ui/themes'
 
 
 
@@ -12,17 +14,27 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+
     <html
       lang="en" suppressHydrationWarning>
         <body
       className={'bg-linear-to-br from-gray-950 via-zinc-900 to-stone-900 text-white'}
     >
+      <ClerkProvider
+              appearance={{
+              theme:dark,
+              }}
+            >
+      
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
+            
+            <ConvexClientProvider>
+
         {/* Header */}
         <Header />
 
@@ -40,9 +52,12 @@ export default function RootLayout({ children }) {
             <div className="text-sm text-gray-400">Made By Harsh</div>
           </footer>
         </main>
-      </ThemeProvider>
+        </ConvexClientProvider>
         
+      </ThemeProvider>
+        </ClerkProvider>
         </body>
     </html>
+    
   );
 }

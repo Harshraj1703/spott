@@ -9,7 +9,7 @@ export default defineSchema({
         imageUrl: v.optional(v.string()),
 
         //Onboarding
-        hascompletedOnboarding: v.boolean(),
+        hasCompletedOnboarding: v.boolean(),
 
         location:v.optional(
             v.object({
@@ -30,13 +30,13 @@ export default defineSchema({
     }).index("by_token",["tokenIdentifier"]),
 
     events: defineTable({
-        title: v.string,
+        title: v.string(),
         description: v.string(),
         slug: v.string(),
 
         //Oragniser
-        organiserId : v.is("users"),
-        organiserName : v.string(),
+        organizerId : v.id("users"),
+        organizerName : v.string(),
 
         //Event details
         category: v.string(),
@@ -53,6 +53,7 @@ export default defineSchema({
         address: v.optional(v.string()),
         city: v.string(),
         state: v.optional(v.string()),
+        country: v.string(),
 
         //Capacity  &  Ticketing
         capacity: v.number(),
@@ -72,10 +73,10 @@ export default defineSchema({
     .index("by_category",["category"])
     .index("by_start_date",["startDate"])
     .index("by_slug",["slug"])
-    .index("search_title",{searchField : "title"}),
+    .searchIndex("search_title",{ searchField: "title" }),
 
 
-    registration : defineTable({
+    registrations : defineTable({
         eventId : v.id("events"),
         userId: v.id("users"),
 
@@ -84,11 +85,11 @@ export default defineSchema({
         attendeeEmail: v.string(),
 
         //QR code for Entry
-        qrcode: v.string(),
+        qrCode: v.string(),
 
         //Check-in
-        CheckedIn: v.boolean(),
-        CheckedInAt: v.optional(v.number()),
+        checkedIn: v.boolean(),
+        checkedInAt: v.optional(v.number()),
 
         //Status
         status: v.union(v.literal("confirmed"),v.literal("cancelled")),
@@ -99,6 +100,6 @@ export default defineSchema({
     .index("by_event", ["eventId"])
     .index("by_user",["userId"])
     .index("by_event_user",["eventId","userId"])
-    .index("by_qr_code",["qrcode"]),
+    .index("by_qr_code",["qrCode"]),
     
 });

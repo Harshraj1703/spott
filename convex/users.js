@@ -1,4 +1,6 @@
+import { internal } from "./_generated/api";
 import { mutation, query } from "./_generated/server";
+import { v } from "convex/values";
 
 export const store = mutation({
   args: {},
@@ -7,7 +9,7 @@ export const store = mutation({
     if (!identity) {
       throw new Error("Called storeUser without authentication present");
     }
-    console.log("IDENTITY:", identity);
+   
 
     // Check if we've already stored this identity before.
     // Note: If you don't want to define an index right away, you can use
@@ -33,7 +35,7 @@ export const store = mutation({
       tokenIdentifier: identity.tokenIdentifier,
       email:identity.email ?? "",
       imageUrl : identity.pictureUrl,
-      hascompletedOnboarding:false,
+      hasCompletedOnboarding:false,
       freeEventsCreated:0,
          createdAt: Date.now(),
          updatedAt: Date.now(),
@@ -60,4 +62,25 @@ export const getCurrentUser = query({
         return user;
 
     },
+})
+
+export const completeOnboarding = mutation({
+  args: {
+    location: v.object({
+      city: v.string(),
+      state: v.optional(v.string()),
+      country: v.string(),
+    }),
+    interests: v.array(v.string()),
+  },
+  handler: async (ctx,args) => {
+    const user = await ctx.runQuery(internal.users.getCurrentUser);
+    await ctx.db.patch(user._id,{
+      location: args.location,
+      interests: args.interests,
+      hasCompletedOnboarding : true,
+      updatedAt: Date.now(),
+  });
+  return user._id;
+  },
 })

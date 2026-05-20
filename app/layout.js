@@ -4,7 +4,7 @@ import Header from "@/components/header";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from '@clerk/ui/themes'
-
+import { Toaster } from "@/components/ui/sonner";
 
 
 export const metadata = {
@@ -20,18 +20,18 @@ export default function RootLayout({ children }) {
         <body
       className={'bg-linear-to-br from-gray-950 via-zinc-900 to-stone-900 text-white'}
     >
-      <ClerkProvider
-              appearance={{
-              theme:dark,
-              }}
-            >
-      
-        <ThemeProvider
+
+      <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
+      <ClerkProvider
+              appearance={{
+              theme:dark,
+              }}
+            >
             
             <ConvexClientProvider>
 
@@ -51,11 +51,13 @@ export default function RootLayout({ children }) {
           <footer className="border-t border-gray-800/50 py-8 px-6 max-w-7xl mx-auto">
             <div className="text-sm text-gray-400">Made By Harsh</div>
           </footer>
+          <Toaster richColors/>
         </main>
+
         </ConvexClientProvider>
-        
-      </ThemeProvider>
         </ClerkProvider>
+      </ThemeProvider>
+        
         </body>
     </html>
     

@@ -13,7 +13,7 @@ export function useStoreUser() {
   // has stored the user.
   const [userId, setUserId] = useState(null);
   const storeUser = useMutation(api.users.store);
-  console.log("working hook");
+  
   // Call the `storeUser` mutation function to store
   // the current user in the `users` table and return the `Id` value.
   useEffect(() => {

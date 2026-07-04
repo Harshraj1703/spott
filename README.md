@@ -148,6 +148,4 @@ Spott's Convex schema is built around three core tables:
 
 Contributions, issues, and feature requests are welcome. Feel free to open a pull request or file an issue.
 
-## 📄 License
 
-No license has been specified for this project yet. Consider adding one (e.g. MIT) to clarify how others can use this code.
